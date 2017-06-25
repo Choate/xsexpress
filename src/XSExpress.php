@@ -44,12 +44,12 @@ class XSExpress extends Component
 
     public function init() {
         parent::init();
-        $this->httpsqs = Instance::ensure($this->httpsqs);;
-        $this->db = Instance::ensure($this->db);
+        $this->httpsqs = Instance::ensure($this->httpsqs, is_object($this->httpsqs) ? get_class($this->httpsqs) : \stdClass::class);
+        $this->db = Instance::ensure($this->db, Connection::className());
         if (!is_object($this->getHttpsqs())) {
             throw new InvalidConfigException('无效的HTTPSQS配置');
         }
-        if ($this->getDb() instanceof Connection) {
+        if (!$this->getDb() instanceof Connection) {
             throw new InvalidConfigException('无效的DB配置');
         }
         Producer::setDb($this->db);
