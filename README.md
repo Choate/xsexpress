@@ -64,16 +64,21 @@ try {
 ### 守护进程配置
 
 ```php
-'xsexpress'        => [
-    'class' => 'choate\xsexpress\XSExpress',
-    'httpsqs' => [
-        'class' => '\Httpsqs',
-        ...
+'controllerMap' => [
+    'express' => '\choate\xsexpress\controllers\ExpressController',
+],
+'components'          => [
+    'xsexpress'        => [
+        'class' => 'choate\xsexpress\XSExpress',
+        'httpsqs' => [
+            'class' => '\Httpsqs',
+            ...
+        ],
+        'db' => 'db',
+        'retryTime' => 300,
+        'signatureKey' => 'test_express_signature',
     ],
-    'db' => 'db',
-    'retryTime' => 300,
-    'signatureKey' => 'test_express_signature',
-]
+],
 ```
 
 ### 平台使用

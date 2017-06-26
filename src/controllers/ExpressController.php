@@ -10,6 +10,14 @@ class ExpressController extends Controller
 {
     public $serviceName = 'XSExpress';
 
+    public function options($actionID)
+    {
+        return array_merge(
+            parent::options($actionID),
+            ['serviceName'] // global for all actions
+        );
+    }
+
     public function actionRecycle($sleep = 5) {
         /* @var XSExpress $service */
         $service = Yii::$app->get($this->serviceName);
