@@ -75,6 +75,7 @@ try {
             ...
         ],
         'db' => 'db',
+        'mutex' => 'fileMutex',
         'retryTime' => 300,
         'signatureKey' => 'test_express_signature',
     ],

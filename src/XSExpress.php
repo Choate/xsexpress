@@ -11,6 +11,7 @@ use yii\base\InvalidConfigException;
 use yii\db\Connection;
 use yii\di\Instance;
 use yii\helpers\Json;
+use yii\mutex\Mutex;
 
 class XSExpress extends Component
 {
@@ -42,15 +43,26 @@ class XSExpress extends Component
      */
     private $db;
 
+    /**
+     * 锁配置
+     *
+     * @var array|\yii\mutex\Mutex|string
+     */
+    private $mutex;
+
     public function init() {
         parent::init();
         $this->httpsqs = Instance::ensure($this->httpsqs, is_object($this->httpsqs) ? get_class($this->httpsqs) : \stdClass::class);
         $this->db = Instance::ensure($this->db, Connection::className());
+        $this->mutex = Instance::ensure($this->mutex, Mutex::className());
         if (!is_object($this->getHttpsqs())) {
             throw new InvalidConfigException('无效的HTTPSQS配置');
         }
         if (!$this->getDb() instanceof Connection) {
             throw new InvalidConfigException('无效的DB配置');
+        }
+        if (!$this->getMutex() instanceof Mutex) {
+            throw new InvalidConfigException('无效的Mutex配置');
         }
         Producer::setDb($this->db);
     }
@@ -215,5 +227,13 @@ class XSExpress extends Component
         }
 
         return $result;
+    }
+
+    public function getMutex() {
+        return $this->mutex;
+    }
+
+    public function setMutex($mutex) {
+        $this->mutex = $mutex;
     }
 }
