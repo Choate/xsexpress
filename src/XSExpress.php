@@ -52,7 +52,7 @@ class XSExpress extends Component
 
     public function init() {
         parent::init();
-        $this->httpsqs = Instance::ensure($this->httpsqs, is_object($this->httpsqs) ? get_class($this->httpsqs) : \stdClass::class);
+        $this->httpsqs = Instance::ensure($this->httpsqs);
         $this->db = Instance::ensure($this->db, Connection::className());
         $this->mutex = Instance::ensure($this->mutex, Mutex::className());
         if (!is_object($this->getHttpsqs())) {
